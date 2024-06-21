@@ -1,2 +1,2 @@
 # mvc
-Model View Controller example
+Model View Controller pattern example in Python using PySide2 (QT).
