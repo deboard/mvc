@@ -18,14 +18,14 @@ class Controller(QObject):
 
     data_sig = Signal(str)
 
-    def __init__(self, cview, cmod, parent=None):
+    def __init__(self, aview, amod, parent=None):
         """constructor"""
         super().__init__(parent)
 
         self.view: view.View
         self.model: model.Model
-        self.view = cview
-        self.model = cmod
+        self.view = aview
+        self.model = amod
 
         self.data_sig.connect(self.model.update_data)
 

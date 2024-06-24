@@ -11,7 +11,6 @@ __version__ = "1.0.0.0"
 from PySide2.QtCore import Slot, Signal, QObject
 import view
 
-
 class Model(QObject):
     """
     model class for MVC design pattern
@@ -20,17 +19,19 @@ class Model(QObject):
     """
 
     data_sig = Signal(str)
-    incr = 0
 
-    def __init__(self, mview, parent=None):
+    def __init__(self, aview, parent=None):
         """constructor"""
         super().__init__(parent)
+       
+        self.incr: int
+        self.data: str
+        self.mview: view.View
 
-        self.view: view.View
-
+        self.mview = aview
+        self.incr = 0
         self.data = "default"
-        self.view = mview
-        self.data_sig.connect(self.view.update_data)
+        self.data_sig.connect(self.mview.update_data)
 
     @Slot(str)
     def update_data(self, arg):

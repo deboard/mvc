@@ -13,18 +13,20 @@ from PySide2.QtCore import Signal, Slot
 
 import controller
 
-
 class View(QWidget):
     """View class of MVC pattern"""
 
-    input_sig = Signal(str)
+    clicked_sig = Signal(str)
+    controller: controller.Controller
+    label: QLabel
+    entry: QLineEdit
+    button: QPushButton
 
     def __init__(self, ctrl=None):
         """constructor"""
 
         super().__init__()
 
-        self.controller: controller.Controller
         self.controller = ctrl
 
         self.setWindowTitle("MVC View")
@@ -42,7 +44,7 @@ class View(QWidget):
 
     def btn_clicked(self):
         """clicked signal"""
-        self.input_sig.emit(self.entry.text())
+        self.clicked_sig.emit(self.entry.text())
 
     @Slot(str)
     def update_data(self, arg):
@@ -53,4 +55,4 @@ class View(QWidget):
     def set_controller(self, ctrl: controller.Controller):
         """set controller"""
         self.controller = ctrl
-        self.input_sig.connect(self.controller.button_action)
+        self.clicked_sig.connect(self.controller.button_action)
