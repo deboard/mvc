@@ -43,13 +43,13 @@ class View(QWidget):
         layout.addWidget(self.button)
 
     def btn_clicked(self):
-        """clicked signal"""
+        """clicked signal, send entry text to ctrlr"""
         self.clicked_sig.emit(self.entry.text())
 
     @Slot(str)
     def update_data(self, arg):
         """get updates from model"""
-        print(f"View update: {arg}")
+        print(f"View entry update: {arg}")
         self.entry.setText(arg)
 
     def set_controller(self, ctrl: controller.Controller):
