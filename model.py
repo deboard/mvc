@@ -5,33 +5,54 @@
 __author__ = "John DeBoard"
 __email__ = "john.deboard@gmail.com"
 __date__ = "2023-10-18"
-__modified__ = "2024-06-21"
+__modified__ = "2025-07-18"
 __version__ = "1.0.0.0"
 
-from PySide2.QtCore import Slot, Signal, QObject
-import view
+import os
+from PySide6.QtCore import Slot, Signal, QObject
+import controller
 
 class Model(QObject):
     """
     model class for MVC design pattern
-    model updates view
+    model responds to controller
     model is updated by controller
     """
 
     data_sig = Signal(str)
+    updated_sig = Signal(str)
+    check_data = Signal()
 
-    def __init__(self, aview, parent=None):
+    def __init__(self, parent=None):
         """constructor"""
         super().__init__(parent)
        
         self.incr: int
         self.data: str
-        self.mview: view.View
+        self.cntrl: controller.Controller
 
-        self.mview = aview
+        self.data_file = "data.txt"
         self.incr = 0
         self.data = "default"
-        self.data_sig.connect(self.mview.update_data)
+
+        self.check_data.connect(self.data_check)
+
+    @Slot()
+    def data_check(self):
+        print("model.data_check")
+        if os.path.exists(self.data_file):
+            print(f"The path '{self.data_file}' exists.")
+            with open(self.data_file, 'r') as fd:
+                self.data = fd.readline()
+                print(f"self.data: {self.data}")
+                self.updated_sig.emit(self.data)
+                self.data_sig.emit(self.data)
+
+
+    def set_controller(self, actrl):
+        self.cntrl = actrl
+        self.updated_sig.connect(self.cntrl.model_updated)
+        self.check_data.emit()
 
     @Slot(str)
     def update_data(self, arg):
@@ -39,4 +60,11 @@ class Model(QObject):
         self.data = arg
         self.incr = self.incr + 1
         print("Model data set to: " + self.data)
+        self.data = str(self.incr) + ":" + self.data
         self.data_sig.emit(str(self.incr) + ":" + self.data)
+        self.updated_sig.emit(self.data)
+
+        with open(self.data_file, 'w') as fd:
+            fd.write(self.data)
+
+

@@ -5,11 +5,11 @@
 __author__ = "John DeBoard"
 __email__ = "john.deboard@gmail.com"
 __date__ = "2023-10-18"
-__modified__ = "2024-06-21"
+__modified__ = "2025-07-18"
 __version__ = "1.0.0.0"
 
-from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QVBoxLayout
-from PySide2.QtCore import Signal, Slot
+from PySide6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QVBoxLayout
+from PySide6.QtCore import Signal, Slot
 
 import controller
 
@@ -31,7 +31,7 @@ class View(QWidget):
 
         self.setWindowTitle("MVC View")
 
-        self.label = QLabel("Hello, World!", self)
+        self.label = QLabel("No model data", self)
         self.entry = QLineEdit("", self)
         self.button = QPushButton("Click Me!", self)
 
@@ -48,11 +48,14 @@ class View(QWidget):
 
     @Slot(str)
     def update_data(self, arg):
-        """get updates from model"""
-        print(f"View entry update: {arg}")
-        self.entry.setText(arg)
+        """get updates from controller --> this.view"""
+        print(f"View entry update from controller: {arg}")
+        self.label.setText(arg)
 
     def set_controller(self, ctrl: controller.Controller):
-        """set controller"""
+        """
+        set controller
+        setup this.view --> controller event(s)
+        """
         self.controller = ctrl
         self.clicked_sig.connect(self.controller.button_action)
