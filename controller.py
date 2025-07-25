@@ -1,4 +1,4 @@
-"""'
+"""
   Description: Controller portion of MVC design pattern
 """
 
@@ -30,11 +30,12 @@ class Controller(QObject):
         self.model = amod
 
         self.init_comps_sig.connect(self.init_components)
-        # this signal should be handles outside of __init__
+        # this signal should be handled outside of __init__
         self.init_comps_sig.emit()
 
     @Slot()
     def init_components(self):
+        """initialize components"""
         print("controller: init_components")
         self.view.set_controller(self)
         self.view_update.connect(self.view.update_data)
@@ -52,8 +53,7 @@ class Controller(QObject):
 
     @Slot(str)
     def model_updated(self, arg):
-        # model data --> controller signal
+        """model data --> controller signal"""
         print("Controller: model data updated to: " + arg)
         # controller --> view
         self.view_update.emit(arg)
-

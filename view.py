@@ -13,6 +13,7 @@ from PySide6.QtCore import Signal, Slot
 
 import controller
 
+
 class View(QWidget):
     """View class of MVC pattern"""
 
@@ -52,7 +53,7 @@ class View(QWidget):
         print(f"View entry update from controller: {arg}")
         self.label.setText(arg)
 
-    def set_controller(self, ctrl: controller.Controller):
+    def set_controller(self, ctrl):
         """
         set controller
         setup this.view --> controller event(s)

@@ -19,6 +19,7 @@ import model
 import controller
 
 if __name__ == "__main__":
+    # main entry
 
     app = QApplication(sys.argv)
 
