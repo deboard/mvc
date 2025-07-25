@@ -14,9 +14,9 @@ import sys
 from PySide6.QtWidgets import QApplication
 
 ## import MVC design pattern modules
-import view
-import model
-import controller
+from modules import view
+from modules import model
+from modules import controller
 
 if __name__ == "__main__":
     # main entry

@@ -10,7 +10,7 @@ __version__ = "1.0.0.0"
 
 import os
 from PySide6.QtCore import Slot, Signal, QObject
-import controller
+from modules import controller
 
 
 class Model(QObject):

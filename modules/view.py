@@ -11,7 +11,7 @@ __version__ = "1.0.0.0"
 from PySide6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QVBoxLayout
 from PySide6.QtCore import Signal, Slot
 
-import controller
+from modules import controller
 
 
 class View(QWidget):

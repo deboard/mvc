@@ -9,8 +9,8 @@ __modified__ = "2025-07-18"
 __version__ = "1.0.0.2"
 
 from PySide6.QtCore import Signal, Slot, QObject
-import view
-import model
+from modules import view
+from modules import model
 
 
 class Controller(QObject):
