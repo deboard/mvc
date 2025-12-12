@@ -5,8 +5,8 @@
 __author__ = "John DeBoard"
 __email__ = "john.deboard@gmail.com"
 __date__ = "2023-10-18"
-__modified__ = "2025-10-29"
-__version__ = "1.0.2.0"
+__modified__ = "2025-12-12"
+__version__ = "1.0.3.0"
 
 import os
 import sqlite3
@@ -35,7 +35,6 @@ class Model(QObject):
         self.data: str
         self.cntrl: controller.Controller
 
-        self.data_file = "data.txt"
         self.incr = 0
         self.data = "default"
 
@@ -43,10 +42,8 @@ class Model(QObject):
 
         self.conn = sqlite3.connect('mvc.db')
         self.cursor = self.conn.cursor()
-        self.cursor.execute('''
-            CREATE TABLE IF NOT EXISTS mvc (
-                lastdata TEXT
-            )''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS 
+            mvc (lastdata TEXT)''')
 
     @Slot()
     def data_check(self):
@@ -57,7 +54,7 @@ class Model(QObject):
         rows = self.cursor.fetchall()
         if len(rows):
             self.data = rows[len(rows) - 1][0]
-            print(f"self.data: {self.data}")
+            print(f"model.self.data: {self.data}[0]")
             self.updated_sig.emit(self.data)
             self.data_sig.emit(self.data)
 
