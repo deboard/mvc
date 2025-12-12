@@ -59,4 +59,5 @@ class View(QWidget):
         setup this.view --> controller event(s)
         """
         self.controller = ctrl
+        # connect click to controller, or rather controller to click
         self.clicked_sig.connect(self.controller.button_action)
